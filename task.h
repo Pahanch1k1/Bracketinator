@@ -4,15 +4,16 @@
 #include <iostream>
 #include <string>
 
-// Структура для хранения скобки и её позиции
-struct BracketInfo {
+// Класс для хранения скобки и её позиции
+class BracketInfo {
+public:
     char bracket;
     int position;
     BracketInfo* next;
     BracketInfo(char br, int pos);
 };
 
-// Свой класс стека на основе односвязного списка
+// Собственная реализация стека на основе односвязного списка
 class Stack {
 private:
     BracketInfo* top;
@@ -40,7 +41,7 @@ public:
     char getBracket() const;
 };
 
-// Исключение: несоответствие скобок
+// Исключение: несоответствие типов скобок
 class MismatchBracketException {
 private:
     int position;
@@ -66,14 +67,14 @@ public:
     char getBracket() const;
 };
 
-// Исключение: нет ни одной скобки
+// Исключение: в строке нет ни одной скобки
 class NoBracketsException {
 public:
     NoBracketsException();
     std::string getMessage() const;
 };
 
-// Исключение: недопустимый символ
+// Исключение: недопустимый символ (не скобка и не пробел)
 class InvalidCharacterException {
 private:
     int position;
@@ -85,10 +86,11 @@ public:
     char getCharacter() const;
 };
 
-// Основной класс для проверки скобочной последовательности
+// Основной класс проверки скобочной последовательности
 class BracketChecker {
 private:
     Stack stack;
+    
     bool isOpening(char c);
     bool isClosing(char c);
     bool isMatching(char opening, char closing);

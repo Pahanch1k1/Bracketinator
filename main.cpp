@@ -73,12 +73,12 @@ void showExamples() {
 
 std::string generateRandomSequence() {
     srand(time(nullptr));
-    int length = rand() % 20 + 5;
+    int length = rand() % 20 + 5; //случайная длина от 5 до 24
     std::string brackets = "()[]{}";
     std::string result = "";
     
     for (int i = 0; i < length; i++) {
-        result += brackets[rand() % 6];
+        result += brackets[rand() % 6]; // случайный выбор из 6 скобок
     }
     return result;
 }
@@ -97,7 +97,7 @@ std::string readFromFile() {
         return "";
     }
     
-    std::getline(file, sequence);
+    std::getline(file, sequence); // читаем только первую строку
     file.close();
     
     if (sequence.empty()) {
@@ -120,6 +120,7 @@ int main() {
         showMenu();
         std::cin >> choice;
         
+        // защита от ввода букв вместо цифр
         if (std::cin.fail()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

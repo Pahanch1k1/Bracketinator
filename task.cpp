@@ -14,8 +14,8 @@ Stack::~Stack() {
 
 void Stack::push(char bracket, int position) {
     BracketInfo* newNode = new BracketInfo(bracket, position);
-    newNode->next = top;
-    top = newNode;
+    newNode->next = top; // новый узел указывает на старую вершину
+    top = newNode; // вершиной становится новый узел
     size++;
 }
 
@@ -25,7 +25,7 @@ BracketInfo Stack::pop() {
     }
     BracketInfo* temp = top;
     BracketInfo result = *top;
-    top = top->next;
+    top = top->next; // перемещаем вершину на следующий элемент
     delete temp;
     size--;
     return result;
@@ -122,7 +122,7 @@ int BracketChecker::checkSequence(const std::string& sequence) {
     
     for (int i = 0; i < sequence.length(); i++) {
         char current = sequence[i];
-        int pos = i + 1;  // позиция с 1
+        int pos = i + 1;  // пользовательская позиция с 1, а не с 0
         
         // Проверка на допустимые символы (только скобки и пробелы)
         if (!isValidBracketOrSpace(current)) {
@@ -145,6 +145,7 @@ int BracketChecker::checkSequence(const std::string& sequence) {
             }
             
             BracketInfo topInfo = stack.peek();
+            // проверяем, соответствует ли закрывающая скобка последней открытой
             if (!isMatching(topInfo.bracket, current)) {
                 throw MismatchBracketException(pos, topInfo.bracket, current);
             }
@@ -158,6 +159,7 @@ int BracketChecker::checkSequence(const std::string& sequence) {
         throw NoBracketsException();
     }
     
+    // если после обработки всех символов стек не пуст -> есть незакрытые скобки
     if (!stack.isEmpty()) {
         BracketInfo remaining = stack.peek();
         throw MissingClosingException(remaining.position, remaining.bracket);
