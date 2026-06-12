@@ -31,6 +31,6 @@
 
 ## Запуск
 
-g++ -o bracket_checker main.cpp task.cpp
+g++ main.cpp task.cpp -o bracket_checker
 
 ./bracket_checker
